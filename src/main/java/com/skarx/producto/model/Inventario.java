@@ -3,6 +3,8 @@ package com.skarx.producto.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +29,7 @@ public class Inventario {
     @JoinColumn(name = "id_proveedor", nullable = false)
     private Proveedor proveedor;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "inventario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Producto> productos;
 }
