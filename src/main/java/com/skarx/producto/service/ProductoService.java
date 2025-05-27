@@ -20,7 +20,7 @@ public interface ProductoService {
     ResponseEntity<Object> obtenerProductoPorId(Long id)
             throws MensajeException;
 
-    ResponseEntity<Object> actualizarProducto(Long id, Producto productoActualizado)
+    ResponseEntity<Object> actualizarProducto(Producto productoActualizado)
             throws MensajeException;
 
     ResponseEntity<Object> eliminarProducto(Long id)
