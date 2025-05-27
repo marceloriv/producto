@@ -1,8 +1,8 @@
 package com.skarx.producto.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.skarx.producto.model.Inventario;
@@ -18,11 +18,11 @@ public interface RepositoryInventario extends JpaRepository<Inventario, Long> {
 
     Inventario findById(long id);
 
-    Inventario findByProductoId(long productoId);
+    @Query("SELECT i FROM Inventario i JOIN i.productos p WHERE p.id = :productoId")
+    Inventario findByProductoId(@Param("productoId") long productoId);
 
     void deleteById(long id);
 
     Inventario updateInventario(Inventario inventario);
 
-    List<Inventario> findAll();
 }
