@@ -46,7 +46,6 @@ public class RegistracionProductoDto {
         producto.setCategoria(this.categoria);
         producto.setMarca(this.marca);
         producto.setModelo(this.modelo);
-        producto.setInventario(null); // Se establecerá más tarde al registrar el producto
         return producto;
     }
 }
