@@ -22,7 +22,7 @@ public class RegistracionProveedorDto {
     private String direccion;
 
     @NotBlank(message = "El teléfono no puede estar vacío")
-    @Size(min = 11, max = 11, message = "El teléfono debe tener entre 11 y 15 caracteres")
+    @Size(min = 11, max = 11, message = "El teléfono debe tener entre 11 caracteres")
     @Pattern(regexp = "\\d+", message = "El teléfono solo puede contener números")
     private String telefono;
 
