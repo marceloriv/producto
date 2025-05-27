@@ -1,5 +1,7 @@
 package com.skarx.producto.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -43,6 +45,7 @@ public class Producto {
     private String modelo;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "id_inventario", nullable = false)
     private Inventario inventario;
 }
