@@ -14,15 +14,11 @@ import com.skarx.producto.model.Inventario;
 @Repository
 public interface RepositoryInventario extends JpaRepository<Inventario, Long> {
 
-    Inventario crearInventario(Inventario inventario);
-
     Inventario findById(long id);
 
     @Query("SELECT i FROM Inventario i JOIN i.productos p WHERE p.id = :productoId")
     Inventario findByProductoId(@Param("productoId") long productoId);
 
     void deleteById(long id);
-
-    Inventario updateInventario(Inventario inventario);
 
 }
