@@ -45,7 +45,7 @@ public class ProductoController {
     @Operation(summary = "Actualizar producto", description = "Permite actualizar los datos de un producto existente")
     public ResponseEntity<Object> actualizarProducto(@PathVariable Long id, @RequestBody Producto productoActualizado)
             throws MensajeException {
-        return productoService.actualizarProducto(id, productoActualizado);
+        return productoService.actualizarProducto(productoActualizado);
     }
 
     @DeleteMapping("/{id}")
