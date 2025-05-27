@@ -1,6 +1,8 @@
 package com.skarx.producto.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,8 +41,7 @@ public class ProductoServiceImp implements ProductoService {
             // Buscar el inventario por ID
             Inventario inventario = repositoryInventario.findById(nuevoProductoDto.getIdInventario())
                     .orElseThrow(() -> new MensajeException("Inventario no encontrado con ID: " + nuevoProductoDto.getIdInventario()));
-
-            // Convertir el DTO a entidad Producto
+            //  Convertir el DTO a entidad Producto
             Producto nuevoProducto = nuevoProductoDto.convertirDtoAProducto();
             nuevoProducto.setInventario(inventario); // Asociar el producto con el inventario
 
@@ -60,7 +61,11 @@ public class ProductoServiceImp implements ProductoService {
         try {
             Producto producto = repositoryProducto.findById(id)
                     .orElseThrow(() -> new MensajeException("Producto no encontrado con el ID: " + id));
-            return ResponseEntity.ok(producto);
+            Map<String, Object> respuesta = new HashMap<>();
+            respuesta.put("producto", producto);
+            respuesta.put("inventario", producto.getInventario().getId());
+            return ResponseEntity.ok(respuesta);
+
         } catch (Exception e) {
             throw new MensajeException(e.getMessage());
         }
@@ -114,8 +119,10 @@ public class ProductoServiceImp implements ProductoService {
             if (!producto.getNombre().equals(productoDto.getNombre()) && repositoryProducto.findByNombre(productoDto.getNombre()) != null) {
                 throw new MensajeException("El nombre ya está en uso: " + productoDto.getNombre());
             }
+            Inventario inventario = repositoryInventario.findById(productoDto.getIdInventario())
+                    .orElseThrow(() -> new MensajeException("Inventario no encontrado con ID: " + productoDto.getIdInventario()));
             Producto productoActualizado = productoDto.convertirDtoAProducto();
-            productoActualizado.setId(id);
+            productoActualizado.setInventario(inventario);
             repositoryProducto.save(productoActualizado);
             return ResponseEntity.ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Producto actualizado exitosamente"));
         } catch (MensajeException e) {
