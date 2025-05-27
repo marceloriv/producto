@@ -30,6 +30,10 @@ public class RegistracionProductoDto {
     @Positive(message = "El stock debe ser mayor o igual a 0")
     private int stock;
 
+    private String categoria; // Opcional, puede ser null
+    private String marca; // Opcional, puede ser null
+
+    private String modelo; // Opcional, puede ser null
     @NotNull(message = "El ID del inventario no puede estar vacío")
     private Long idInventario; // Clave foránea para asociar el producto con un inventario
 
@@ -39,6 +43,10 @@ public class RegistracionProductoDto {
         producto.setDescripcion(this.descripcion);
         producto.setPrecio(this.precio);
         producto.setStock(this.stock);
+        producto.setCategoria(this.categoria);
+        producto.setMarca(this.marca);
+        producto.setModelo(this.modelo);
+        producto.setInventario(null); // Se establecerá más tarde al registrar el producto
         return producto;
     }
 }
