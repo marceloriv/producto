@@ -3,6 +3,7 @@ package com.skarx.producto.dto;
 import com.skarx.producto.model.Proveedor;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +22,8 @@ public class RegistracionProveedorDto {
     private String direccion;
 
     @NotBlank(message = "El teléfono no puede estar vacío")
-    @Size(max = 15, message = "El teléfono no puede tener más de 15 caracteres")
+    @Size(min = 11, max = 11, message = "El teléfono debe tener entre 11 y 15 caracteres")
+    @Pattern(regexp = "\\d+", message = "El teléfono solo puede contener números")
     private String telefono;
 
     public Proveedor convertirDtoAProveedor() {
