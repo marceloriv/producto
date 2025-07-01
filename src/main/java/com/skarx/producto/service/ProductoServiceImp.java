@@ -50,7 +50,7 @@ public class ProductoServiceImp implements ProductoService {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Producto registrado exitosamente"));
         } catch (MensajeException e) {
-            throw new MensajeException(e.getMessage());
+            throw e; // Re-lanza la excepción sin envolver
         } catch (Exception e) {
             throw new MensajeException("Error al registrar el producto: " + e.getMessage());
         }
@@ -66,8 +66,10 @@ public class ProductoServiceImp implements ProductoService {
             respuesta.put("inventario", producto.getInventario().getId());
             return ResponseEntity.ok(respuesta);
 
+        } catch (MensajeException e) {
+            throw e; // Re-lanza la excepción sin envolver
         } catch (Exception e) {
-            throw new MensajeException(e.getMessage());
+            throw new MensajeException("Error al obtener el producto: " + e.getMessage());
         }
     }
 
@@ -86,13 +88,20 @@ public class ProductoServiceImp implements ProductoService {
     }
 
     @Override
-    public ResponseEntity<Object> actualizarProducto(Long id, Producto productoActualizado) throws MensajeException {
+    public ResponseEntity<Object> actualizarProducto(Producto productoActualizado) throws MensajeException {
         try {
-            Producto producto = repositoryProducto.findById(id)
-                    .orElseThrow(() -> new MensajeException("Producto no encontrado con el ID: " + id));
-            productoActualizado.setId(id);
+            // Verificar que el producto existe
+            if (productoActualizado.getId() <= 0) {
+                throw new MensajeException("ID del producto no válido");
+            }
+
+            Producto producto = repositoryProducto.findById(productoActualizado.getId())
+                    .orElseThrow(() -> new MensajeException("Producto no encontrado con el ID: " + productoActualizado.getId()));
+
             repositoryProducto.save(productoActualizado);
             return ResponseEntity.ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Producto actualizado exitosamente"));
+        } catch (MensajeException e) {
+            throw e; // Re-lanza la excepción sin envolver
         } catch (Exception e) {
             throw new MensajeException("Error al actualizar el producto: " + e.getMessage());
         }
@@ -105,6 +114,8 @@ public class ProductoServiceImp implements ProductoService {
                     .orElseThrow(() -> new MensajeException("Producto no encontrado con el ID: " + id));
             repositoryProducto.delete(producto);
             return ResponseEntity.ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Producto eliminado exitosamente"));
+        } catch (MensajeException e) {
+            throw e; // Re-lanza la excepción sin envolver
         } catch (Exception e) {
             throw new MensajeException("Error al eliminar el producto: " + e.getMessage());
         }
@@ -116,17 +127,23 @@ public class ProductoServiceImp implements ProductoService {
         try {
             Producto producto = repositoryProducto.findById(id)
                     .orElseThrow(() -> new MensajeException("Producto no encontrado con el ID: " + id));
+
+            // Verificar si el nombre ya está en uso por otro producto
             if (!producto.getNombre().equals(productoDto.getNombre()) && repositoryProducto.findByNombre(productoDto.getNombre()) != null) {
                 throw new MensajeException("El nombre ya está en uso: " + productoDto.getNombre());
             }
+
             Inventario inventario = repositoryInventario.findById(productoDto.getIdInventario())
                     .orElseThrow(() -> new MensajeException("Inventario no encontrado con ID: " + productoDto.getIdInventario()));
+
             Producto productoActualizado = productoDto.convertirDtoAProducto();
+            productoActualizado.setId(id); // CORREGIDO: Establecer el ID del producto
             productoActualizado.setInventario(inventario);
+
             repositoryProducto.save(productoActualizado);
             return ResponseEntity.ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Producto actualizado exitosamente"));
         } catch (MensajeException e) {
-            throw new MensajeException(e.getMessage());
+            throw e; // Re-lanza la excepción sin envolver
         } catch (Exception e) {
             throw new MensajeException("Error al actualizar el producto: " + e.getMessage());
         }
@@ -139,9 +156,10 @@ public class ProductoServiceImp implements ProductoService {
                     .orElseThrow(() -> new MensajeException("Producto no encontrado con el ID: " + id));
             int stock = producto.getStock();
             return ResponseEntity.ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Stock disponible: " + stock));
+        } catch (MensajeException e) {
+            throw e; // Re-lanza la excepción sin envolver
         } catch (Exception e) {
             throw new MensajeException("Error al consultar el stock del producto: " + e.getMessage());
         }
-
     }
 }
