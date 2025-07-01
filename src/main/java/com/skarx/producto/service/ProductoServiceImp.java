@@ -90,18 +90,19 @@ public class ProductoServiceImp implements ProductoService {
     @Override
     public ResponseEntity<Object> actualizarProducto(Producto productoActualizado) throws MensajeException {
         try {
-            // Verificar que el producto existe
-            if (productoActualizado.getId() <= 0) {
+            // Cambiar validación para ser consistente con Long
+            if (productoActualizado.getId() == null || productoActualizado.getId() <= 0) {
                 throw new MensajeException("ID del producto no válido");
             }
 
-            Producto producto = repositoryProducto.findById(productoActualizado.getId())
+            // Verificar que el producto existe antes de actualizar
+            repositoryProducto.findById(productoActualizado.getId())
                     .orElseThrow(() -> new MensajeException("Producto no encontrado con el ID: " + productoActualizado.getId()));
 
             repositoryProducto.save(productoActualizado);
             return ResponseEntity.ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Producto actualizado exitosamente"));
         } catch (MensajeException e) {
-            throw e; // Re-lanza la excepción sin envolver
+            throw e;
         } catch (Exception e) {
             throw new MensajeException("Error al actualizar el producto: " + e.getMessage());
         }
