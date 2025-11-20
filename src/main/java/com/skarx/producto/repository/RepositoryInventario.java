@@ -16,6 +16,8 @@ public interface RepositoryInventario extends JpaRepository<Inventario, Long> {
 
     Inventario findById(long id);
 
+    Inventario findByNombre(String nombre);
+
     @Query("SELECT i FROM Inventario i JOIN i.productos p WHERE p.id = :productoId")
     Inventario findByProductoId(@Param("productoId") long productoId);
 

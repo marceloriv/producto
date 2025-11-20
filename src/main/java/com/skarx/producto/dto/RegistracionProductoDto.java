@@ -34,8 +34,7 @@ public class RegistracionProductoDto {
     private String marca; // Opcional, puede ser null
 
     private String modelo; // Opcional, puede ser null
-    @NotNull(message = "El ID del inventario no puede estar vacío")
-    private Long idInventario; // Clave foránea para asociar el producto con un inventario
+    private Long idInventario; // Opcional - se auto-creará si es null
 
     public Producto convertirDtoAProducto() {
         Producto producto = new Producto();

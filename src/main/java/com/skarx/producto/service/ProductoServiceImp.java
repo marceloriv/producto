@@ -38,10 +38,21 @@ public class ProductoServiceImp implements ProductoService {
                 throw new MensajeException("El producto ya existe con el nombre: " + nuevoProductoDto.getNombre());
             }
 
-            // Buscar el inventario por ID
-            Inventario inventario = repositoryInventario.findById(nuevoProductoDto.getIdInventario())
-                    .orElseThrow(() -> new MensajeException("Inventario no encontrado con ID: " + nuevoProductoDto.getIdInventario()));
-            //  Convertir el DTO a entidad Producto
+            // Buscar el inventario por ID o usar el primero disponible
+            Inventario inventario;
+            if (nuevoProductoDto.getIdInventario() != null) {
+                inventario = repositoryInventario.findById(nuevoProductoDto.getIdInventario())
+                        .orElseThrow(() -> new MensajeException(
+                                "Inventario no encontrado con ID: " + nuevoProductoDto.getIdInventario()));
+            } else {
+                // Si no se proporciona ID, usar el primer inventario disponible
+                List<Inventario> inventarios = repositoryInventario.findAll();
+                if (inventarios.isEmpty()) {
+                    throw new MensajeException("No hay inventarios disponibles. Cree un inventario primero.");
+                }
+                inventario = inventarios.get(0);
+            }
+            // Convertir el DTO a entidad Producto
             Producto nuevoProducto = nuevoProductoDto.convertirDtoAProducto();
             nuevoProducto.setInventario(inventario); // Asociar el producto con el inventario
 
@@ -97,10 +108,12 @@ public class ProductoServiceImp implements ProductoService {
 
             // Verificar que el producto existe antes de actualizar
             repositoryProducto.findById(productoActualizado.getId())
-                    .orElseThrow(() -> new MensajeException("Producto no encontrado con el ID: " + productoActualizado.getId()));
+                    .orElseThrow(() -> new MensajeException(
+                            "Producto no encontrado con el ID: " + productoActualizado.getId()));
 
             repositoryProducto.save(productoActualizado);
-            return ResponseEntity.ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Producto actualizado exitosamente"));
+            return ResponseEntity
+                    .ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Producto actualizado exitosamente"));
         } catch (MensajeException e) {
             throw e;
         } catch (Exception e) {
@@ -130,19 +143,22 @@ public class ProductoServiceImp implements ProductoService {
                     .orElseThrow(() -> new MensajeException("Producto no encontrado con el ID: " + id));
 
             // Verificar si el nombre ya está en uso por otro producto
-            if (!producto.getNombre().equals(productoDto.getNombre()) && repositoryProducto.findByNombre(productoDto.getNombre()) != null) {
+            if (!producto.getNombre().equals(productoDto.getNombre())
+                    && repositoryProducto.findByNombre(productoDto.getNombre()) != null) {
                 throw new MensajeException("El nombre ya está en uso: " + productoDto.getNombre());
             }
 
             Inventario inventario = repositoryInventario.findById(productoDto.getIdInventario())
-                    .orElseThrow(() -> new MensajeException("Inventario no encontrado con ID: " + productoDto.getIdInventario()));
+                    .orElseThrow(() -> new MensajeException(
+                            "Inventario no encontrado con ID: " + productoDto.getIdInventario()));
 
             Producto productoActualizado = productoDto.convertirDtoAProducto();
             productoActualizado.setId(id); // CORREGIDO: Establecer el ID del producto
             productoActualizado.setInventario(inventario);
 
             repositoryProducto.save(productoActualizado);
-            return ResponseEntity.ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Producto actualizado exitosamente"));
+            return ResponseEntity
+                    .ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Producto actualizado exitosamente"));
         } catch (MensajeException e) {
             throw e; // Re-lanza la excepción sin envolver
         } catch (Exception e) {

@@ -26,7 +26,7 @@ public class Inventario {
     private LocalDate fechaActualizacion;
 
     @ManyToOne
-    @JoinColumn(name = "id_proveedor", nullable = false)
+    @JoinColumn(name = "id_proveedor", nullable = true)
     private Proveedor proveedor;
 
     @JsonManagedReference
