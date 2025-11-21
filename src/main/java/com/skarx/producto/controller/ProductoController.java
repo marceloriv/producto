@@ -2,7 +2,14 @@ package com.skarx.producto.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.skarx.producto.dto.ApiRespuestaDto;
 import com.skarx.producto.dto.RegistracionProductoDto;
@@ -24,7 +31,8 @@ public class ProductoController {
 
     @PostMapping
     @Operation(summary = "Registrar un nuevo producto", description = "Permite registrar un nuevo producto en el sistema")
-    public ResponseEntity<ApiRespuestaDto> registrarProducto(@Valid @RequestBody RegistracionProductoDto nuevoProductoDto)
+    public ResponseEntity<ApiRespuestaDto> registrarProducto(
+            @Valid @RequestBody RegistracionProductoDto nuevoProductoDto)
             throws MensajeException {
         return productoService.registrarProducto(nuevoProductoDto);
     }
@@ -56,7 +64,8 @@ public class ProductoController {
 
     @PutMapping("/{id}/actualizar")
     @Operation(summary = "Actualizar producto por ID", description = "Permite actualizar los datos de un producto a partir de su ID")
-    public ResponseEntity<Object> actualizarProductoPorId(@PathVariable Long id, @RequestBody RegistracionProductoDto productoDto)
+    public ResponseEntity<Object> actualizarProductoPorId(@PathVariable Long id,
+            @RequestBody RegistracionProductoDto productoDto)
             throws MensajeException {
         return productoService.actualizarProductoPorId(id, productoDto);
     }

@@ -2,7 +2,14 @@ package com.skarx.producto.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.skarx.producto.dto.ApiRespuestaDto;
 import com.skarx.producto.dto.RegistracionProveedorDto;
@@ -24,7 +31,8 @@ public class ProveedorController {
 
     @PostMapping
     @Operation(summary = "Registrar un nuevo proveedor", description = "Permite registrar un nuevo proveedor en el sistema")
-    public ResponseEntity<ApiRespuestaDto> registrarProveedor(@Valid @RequestBody RegistracionProveedorDto nuevoProveedorDto)
+    public ResponseEntity<ApiRespuestaDto> registrarProveedor(
+            @Valid @RequestBody RegistracionProveedorDto nuevoProveedorDto)
             throws MensajeException {
         return proveedorService.registrarProveedor(nuevoProveedorDto);
     }
@@ -43,7 +51,8 @@ public class ProveedorController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar proveedor", description = "Permite actualizar los datos de un proveedor existente")
-    public ResponseEntity<Object> actualizarProveedor(@PathVariable Long id, @RequestBody Proveedor proveedorActualizado)
+    public ResponseEntity<Object> actualizarProveedor(@PathVariable Long id,
+            @RequestBody Proveedor proveedorActualizado)
             throws MensajeException {
         return proveedorService.actualizarProveedor(id, proveedorActualizado);
     }
@@ -56,7 +65,8 @@ public class ProveedorController {
 
     @PutMapping("/{id}/actualizar")
     @Operation(summary = "Actualizar proveedor por ID", description = "Permite actualizar los datos de un proveedor a partir de su ID")
-    public ResponseEntity<Object> actualizarProveedorPorId(@PathVariable Long id, @RequestBody RegistracionProveedorDto proveedorDto)
+    public ResponseEntity<Object> actualizarProveedorPorId(@PathVariable Long id,
+            @RequestBody RegistracionProveedorDto proveedorDto)
             throws MensajeException {
         return proveedorService.actualizarProveedorPorId(id, proveedorDto);
     }

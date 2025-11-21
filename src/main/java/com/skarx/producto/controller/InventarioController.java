@@ -31,7 +31,8 @@ public class InventarioController {
 
     @PostMapping
     @Operation(summary = "Registrar un nuevo inventario", description = "Permite registrar un nuevo inventario en el sistema")
-    public ResponseEntity<ApiRespuestaDto> registrarInventario(@Valid @RequestBody RegistracionInventarioDto inventarioDto)
+    public ResponseEntity<ApiRespuestaDto> registrarInventario(
+            @Valid @RequestBody RegistracionInventarioDto inventarioDto)
             throws MensajeException {
         return inventarioService.registrarInventario(inventarioDto);
     }
