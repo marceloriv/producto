@@ -148,9 +148,20 @@ public class ProductoServiceImp implements ProductoService {
                 throw new MensajeException("El nombre ya está en uso: " + productoDto.getNombre());
             }
 
-            Inventario inventario = repositoryInventario.findById(productoDto.getIdInventario())
-                    .orElseThrow(() -> new MensajeException(
-                            "Inventario no encontrado con ID: " + productoDto.getIdInventario()));
+            // Buscar el inventario por ID o usar el primero disponible
+            Inventario inventario;
+            if (productoDto.getIdInventario() != null) {
+                inventario = repositoryInventario.findById(productoDto.getIdInventario())
+                        .orElseThrow(() -> new MensajeException(
+                                "Inventario no encontrado con ID: " + productoDto.getIdInventario()));
+            } else {
+                // Si no se proporciona ID, usar el primer inventario disponible
+                List<Inventario> inventarios = repositoryInventario.findAll();
+                if (inventarios.isEmpty()) {
+                    throw new MensajeException("No hay inventarios disponibles. Cree un inventario primero.");
+                }
+                inventario = inventarios.get(0);
+            }
 
             Producto productoActualizado = productoDto.convertirDtoAProducto();
             productoActualizado.setId(id); // CORREGIDO: Establecer el ID del producto
