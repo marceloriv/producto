@@ -8,8 +8,6 @@ import com.skarx.producto.model.Proveedor;
 @Repository
 public interface RepositoryProveedor extends JpaRepository<Proveedor, Long> {
 
-    Proveedor findById(long id);
-
     Proveedor findByNombre(String nombre);
 
 }

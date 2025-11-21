@@ -1,5 +1,7 @@
 package com.skarx.producto.handler;
 
+import java.util.Objects;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -23,9 +25,12 @@ public class ProveedorExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiRespuestaDto> handleValidationExceptions(MethodArgumentNotValidException ex) {
         String mensaje = "Error de validación en el módulo de proveedor";
-        if (ex.getBindingResult().getFieldError() != null) {
+        var fieldError = ex.getBindingResult().getFieldError();
+        if (fieldError != null) {
             // Obtiene el mensaje de error del campo específico que falló la validación
-            mensaje = ex.getBindingResult().getFieldError().getDefaultMessage();
+            mensaje = Objects.requireNonNullElse(
+                    fieldError.getDefaultMessage(),
+                    "Error de validación en el módulo de proveedor");
         }
         return ResponseEntity.badRequest()
                 .body(new ApiRespuestaDto(ApiRespuestaEstados.ERROR, mensaje));

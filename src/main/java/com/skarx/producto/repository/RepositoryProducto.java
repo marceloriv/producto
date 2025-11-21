@@ -8,8 +8,6 @@ import com.skarx.producto.model.Producto;
 @Repository
 public interface RepositoryProducto extends JpaRepository<Producto, Long> {
 
-    Producto findById(long id);
-
     Producto findByNombre(String nombre);
 
 }
