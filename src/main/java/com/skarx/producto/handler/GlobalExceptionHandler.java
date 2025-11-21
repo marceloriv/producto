@@ -17,16 +17,16 @@ import io.swagger.v3.oas.annotations.Hidden;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    /* 
+    /*
      * Metodo para manejar excepciones de tipo NoHandlerFoundException.
-     * Esta excepción se lanza cuando no se encuentra un controlador para una solicitud.
+     * Esta excepción se lanza cuando no se encuentra un controlador para una
+     * solicitud.
      */
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<ApiRespuestaDto> noHandlerFoundExceptionHandler(NoHandlerFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ApiRespuestaDto(ApiRespuestaEstados.ERROR, "Recurso no encontrado"));
     }
-
 
     /*
      * Metodo para manejar excepciones de tipo Exception.
@@ -40,7 +40,8 @@ public class GlobalExceptionHandler {
 
     /*
      * Metodo para manejar excepciones de tipo MethodArgumentNotValidException.
-     * Esta excepción se lanza cuando hay errores de validación en los argumentos del método.
+     * Esta excepción se lanza cuando hay errores de validación en los argumentos
+     * del método.
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiRespuestaDto> handleValidationExceptions(MethodArgumentNotValidException ex) {

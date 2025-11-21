@@ -17,7 +17,8 @@ public class InventarioExceptionHandler {
 
     /*
      * Metodo para manejar excepciones de tipo MethodArgumentNotValidException.
-     * Esta excepción se lanza cuando hay errores de validación en los argumentos del método.
+     * Esta excepción se lanza cuando hay errores de validación en los argumentos
+     * del método.
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiRespuestaDto> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -32,7 +33,8 @@ public class InventarioExceptionHandler {
 
     /*
      * Metodo para manejar excepciones genéricas.
-     * Esta excepción se lanza cuando ocurre un error inesperado en el módulo de inventario.
+     * Esta excepción se lanza cuando ocurre un error inesperado en el módulo de
+     * inventario.
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiRespuestaDto> handleGenericException(Exception ex) {
