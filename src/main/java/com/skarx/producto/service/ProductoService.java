@@ -11,25 +11,25 @@ import com.skarx.producto.model.Producto;
 @Service
 public interface ProductoService {
 
-    ResponseEntity<ApiRespuestaDto> registrarProducto(RegistracionProductoDto nuevoProductoDto)
-            throws MensajeException;
+        ResponseEntity<ApiRespuestaDto> registrarProducto(RegistracionProductoDto nuevoProductoDto)
+                        throws MensajeException;
 
-    ResponseEntity<Object> obtenerTodosLosProductos()
-            throws MensajeException;
+        ResponseEntity<Object> obtenerTodosLosProductos()
+                        throws MensajeException;
 
-    ResponseEntity<Object> obtenerProductoPorId(Long id)
-            throws MensajeException;
+        ResponseEntity<Object> obtenerProductoPorId(Long id)
+                        throws MensajeException;
 
-    ResponseEntity<Object> actualizarProducto(Producto productoActualizado)
-            throws MensajeException;
+        ResponseEntity<Object> actualizarProducto(Producto productoActualizado)
+                        throws MensajeException;
 
-    ResponseEntity<Object> eliminarProducto(Long id)
-            throws MensajeException;
+        ResponseEntity<Object> eliminarProducto(Long id)
+                        throws MensajeException;
 
-    ResponseEntity<Object> actualizarProductoPorId(Long id, RegistracionProductoDto productoDto)
-            throws MensajeException;
+        ResponseEntity<Object> actualizarProductoPorId(Long id, RegistracionProductoDto productoDto)
+                        throws MensajeException;
 
-    ResponseEntity<Object> consultarStock(Long id)
-            throws MensajeException;
+        ResponseEntity<Object> consultarStock(Long id)
+                        throws MensajeException;
 
 }

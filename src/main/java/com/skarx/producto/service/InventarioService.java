@@ -16,7 +16,8 @@ public interface InventarioService {
      * @return Respuesta con el estado de la operación.
      * @throws MensajeException Si ocurre un error durante el registro.
      */
-    ResponseEntity<ApiRespuestaDto> registrarInventario(RegistracionInventarioDto inventarioDto) throws MensajeException;
+    ResponseEntity<ApiRespuestaDto> registrarInventario(RegistracionInventarioDto inventarioDto)
+            throws MensajeException;
 
     /**
      * Obtiene todos los inventarios registrados en el sistema.
@@ -47,12 +48,13 @@ public interface InventarioService {
     /**
      * Actualiza un inventario existente.
      *
-     * @param id ID del inventario a actualizar.
+     * @param id            ID del inventario a actualizar.
      * @param inventarioDto DTO con los nuevos datos del inventario.
      * @return Respuesta con el estado de la operación.
      * @throws MensajeException Si ocurre un error durante la actualización.
      */
-    ResponseEntity<ApiRespuestaDto> actualizarInventario(Long id, RegistracionInventarioDto inventarioDto) throws MensajeException;
+    ResponseEntity<ApiRespuestaDto> actualizarInventario(Long id, RegistracionInventarioDto inventarioDto)
+            throws MensajeException;
 
     /**
      * Consulta el stock de un inventario por su ID.

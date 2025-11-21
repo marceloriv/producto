@@ -36,7 +36,8 @@ public class InventarioServiceImp implements InventarioService {
         try {
             // Buscar el proveedor
             Proveedor proveedor = repositoryProveedor.findById(inventarioDto.getIdProveedor())
-                    .orElseThrow(() -> new MensajeException("Proveedor no encontrado con ID: " + inventarioDto.getIdProveedor()));
+                    .orElseThrow(() -> new MensajeException(
+                            "Proveedor no encontrado con ID: " + inventarioDto.getIdProveedor()));
 
             // Crear el inventario a partir del DTO
             Inventario inventario = inventarioDto.convertirDtoAInventario();
@@ -89,7 +90,8 @@ public class InventarioServiceImp implements InventarioService {
             Inventario inventario = repositoryInventario.findById(id)
                     .orElseThrow(() -> new MensajeException("Inventario no encontrado con ID: " + id));
             repositoryInventario.delete(inventario);
-            return ResponseEntity.ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Inventario eliminado exitosamente"));
+            return ResponseEntity
+                    .ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Inventario eliminado exitosamente"));
         } catch (Exception e) {
             throw new MensajeException("Error al eliminar el inventario: " + e.getMessage());
         }
@@ -107,7 +109,8 @@ public class InventarioServiceImp implements InventarioService {
 
             // Actualizar el proveedor
             Proveedor proveedor = repositoryProveedor.findById(inventarioDto.getIdProveedor())
-                    .orElseThrow(() -> new MensajeException("Proveedor no encontrado con ID: " + inventarioDto.getIdProveedor()));
+                    .orElseThrow(() -> new MensajeException(
+                            "Proveedor no encontrado con ID: " + inventarioDto.getIdProveedor()));
             inventario.setProveedor(proveedor);
 
             // Actualizar los productos asociados
@@ -119,7 +122,8 @@ public class InventarioServiceImp implements InventarioService {
 
             repositoryInventario.save(inventario);
 
-            return ResponseEntity.ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Inventario actualizado exitosamente"));
+            return ResponseEntity
+                    .ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Inventario actualizado exitosamente"));
         } catch (Exception e) {
             throw new MensajeException("Error al actualizar el inventario: " + e.getMessage());
         }

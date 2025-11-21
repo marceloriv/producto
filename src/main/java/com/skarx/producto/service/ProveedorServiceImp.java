@@ -64,7 +64,8 @@ public class ProveedorServiceImp implements ProveedorService {
             Optional<Proveedor> proveedor = repositoryProveedor.findById(id);
             if (proveedor.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(new ApiRespuestaDto(ApiRespuestaEstados.ERROR, "Proveedor no encontrado con el ID: " + id));
+                        .body(new ApiRespuestaDto(ApiRespuestaEstados.ERROR,
+                                "Proveedor no encontrado con el ID: " + id));
             }
             return ResponseEntity.ok(proveedor);
         } catch (Exception e) {
@@ -79,11 +80,13 @@ public class ProveedorServiceImp implements ProveedorService {
             Proveedor proveedor = repositoryProveedor.findById(id).orElse(null);
             if (proveedor == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(new ApiRespuestaDto(ApiRespuestaEstados.ERROR, "Proveedor no encontrado con el ID: " + id));
+                        .body(new ApiRespuestaDto(ApiRespuestaEstados.ERROR,
+                                "Proveedor no encontrado con el ID: " + id));
             }
             proveedorActualizado.setId(id);
             repositoryProveedor.save(proveedorActualizado);
-            return ResponseEntity.ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Proveedor actualizado exitosamente"));
+            return ResponseEntity
+                    .ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Proveedor actualizado exitosamente"));
         } catch (Exception e) {
             throw new MensajeException("Error al actualizar el proveedor: " + e.getMessage());
         }
@@ -95,10 +98,12 @@ public class ProveedorServiceImp implements ProveedorService {
             Proveedor proveedor = repositoryProveedor.findById(id).orElse(null);
             if (proveedor == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(new ApiRespuestaDto(ApiRespuestaEstados.ERROR, "Proveedor no encontrado con el ID: " + id));
+                        .body(new ApiRespuestaDto(ApiRespuestaEstados.ERROR,
+                                "Proveedor no encontrado con el ID: " + id));
             }
             repositoryProveedor.delete(proveedor);
-            return ResponseEntity.ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Proveedor eliminado exitosamente"));
+            return ResponseEntity
+                    .ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Proveedor eliminado exitosamente"));
         } catch (Exception e) {
             throw new MensajeException("Error al eliminar el proveedor: " + e.getMessage());
         }
@@ -111,7 +116,8 @@ public class ProveedorServiceImp implements ProveedorService {
             Proveedor proveedor = repositoryProveedor.findById(id).orElse(null);
             if (proveedor == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(new ApiRespuestaDto(ApiRespuestaEstados.ERROR, "Proveedor no encontrado con el ID: " + id));
+                        .body(new ApiRespuestaDto(ApiRespuestaEstados.ERROR,
+                                "Proveedor no encontrado con el ID: " + id));
             }
             if (!proveedor.getNombre().equals(proveedorDto.getNombre())
                     && repositoryProveedor.findByNombre(proveedorDto.getNombre()) != null) {
@@ -120,7 +126,8 @@ public class ProveedorServiceImp implements ProveedorService {
             Proveedor proveedorActualizado = proveedorDto.convertirDtoAProveedor();
             proveedorActualizado.setId(id);
             repositoryProveedor.save(proveedorActualizado);
-            return ResponseEntity.ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Proveedor actualizado exitosamente"));
+            return ResponseEntity
+                    .ok(new ApiRespuestaDto(ApiRespuestaEstados.EXITO, "Proveedor actualizado exitosamente"));
         } catch (MensajeException e) {
             throw new MensajeException(e.getMessage());
         } catch (Exception e) {
