@@ -1,19 +1,20 @@
 package com.skarx.producto.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -84,8 +85,7 @@ class ProductoServiceTest {
         when(repositoryProducto.findByNombre(anyString())).thenReturn(producto);
 
         // When & Then
-        assertThrows(MensajeException.class, ()
-                -> productoService.registrarProducto(registracionProductoDto));
+        assertThrows(MensajeException.class, () -> productoService.registrarProducto(registracionProductoDto));
     }
 
     @Test
@@ -95,8 +95,7 @@ class ProductoServiceTest {
         when(repositoryInventario.findById(any(Long.class))).thenReturn(Optional.empty());
 
         // When & Then
-        assertThrows(MensajeException.class, ()
-                -> productoService.registrarProducto(registracionProductoDto));
+        assertThrows(MensajeException.class, () -> productoService.registrarProducto(registracionProductoDto));
     }
 
     @Test
@@ -117,8 +116,7 @@ class ProductoServiceTest {
         when(repositoryProducto.findById(any(Long.class))).thenReturn(Optional.empty());
 
         // When & Then
-        assertThrows(MensajeException.class, ()
-                -> productoService.obtenerProductoPorId(1L));
+        assertThrows(MensajeException.class, () -> productoService.obtenerProductoPorId(1L));
     }
 
     @Test
@@ -152,8 +150,7 @@ class ProductoServiceTest {
         when(repositoryProducto.findById(any(Long.class))).thenReturn(Optional.empty());
 
         // When & Then
-        assertThrows(MensajeException.class, ()
-                -> productoService.eliminarProducto(1L));
+        assertThrows(MensajeException.class, () -> productoService.eliminarProducto(1L));
     }
 
     @Test
@@ -177,8 +174,7 @@ class ProductoServiceTest {
         productoConIdNulo.setId(null);
 
         // When & Then
-        assertThrows(MensajeException.class, ()
-                -> productoService.actualizarProducto(productoConIdNulo));
+        assertThrows(MensajeException.class, () -> productoService.actualizarProducto(productoConIdNulo));
     }
 
     @Test
@@ -188,8 +184,7 @@ class ProductoServiceTest {
         productoConIdInvalido.setId(0L);
 
         // When & Then
-        assertThrows(MensajeException.class, ()
-                -> productoService.actualizarProducto(productoConIdInvalido));
+        assertThrows(MensajeException.class, () -> productoService.actualizarProducto(productoConIdInvalido));
     }
 
     @Test
@@ -198,8 +193,7 @@ class ProductoServiceTest {
         when(repositoryProducto.findById(any(Long.class))).thenReturn(Optional.empty());
 
         // When & Then
-        assertThrows(MensajeException.class, ()
-                -> productoService.actualizarProducto(producto));
+        assertThrows(MensajeException.class, () -> productoService.actualizarProducto(producto));
     }
 
     @Test
@@ -236,7 +230,6 @@ class ProductoServiceTest {
         when(repositoryProducto.findById(any(Long.class))).thenReturn(Optional.empty());
 
         // When & Then
-        assertThrows(MensajeException.class, ()
-                -> productoService.consultarStock(1L));
+        assertThrows(MensajeException.class, () -> productoService.consultarStock(1L));
     }
 }

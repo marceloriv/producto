@@ -71,8 +71,7 @@ class ProveedorServiceTest {
         when(repositoryProveedor.findByNombre(anyString())).thenReturn(proveedor);
 
         // When & Then
-        assertThrows(MensajeException.class, ()
-                -> proveedorService.registrarProveedor(registracionProveedorDto));
+        assertThrows(MensajeException.class, () -> proveedorService.registrarProveedor(registracionProveedorDto));
     }
 
     @Test

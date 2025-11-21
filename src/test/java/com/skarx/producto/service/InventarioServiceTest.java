@@ -80,8 +80,7 @@ class InventarioServiceTest {
         when(repositoryProveedor.findById(any(Long.class))).thenReturn(Optional.empty());
 
         // When & Then
-        assertThrows(MensajeException.class, ()
-                -> inventarioService.registrarInventario(registracionInventarioDto));
+        assertThrows(MensajeException.class, () -> inventarioService.registrarInventario(registracionInventarioDto));
     }
 
     @Test
@@ -117,8 +116,7 @@ class InventarioServiceTest {
         when(repositoryInventario.findById(any(Long.class))).thenReturn(Optional.empty());
 
         // When & Then
-        assertThrows(MensajeException.class, ()
-                -> inventarioService.obtenerInventarioPorId(1L));
+        assertThrows(MensajeException.class, () -> inventarioService.obtenerInventarioPorId(1L));
     }
 
     @Test
@@ -140,8 +138,7 @@ class InventarioServiceTest {
         when(repositoryInventario.findById(any(Long.class))).thenReturn(Optional.empty());
 
         // When & Then
-        assertThrows(MensajeException.class, ()
-                -> inventarioService.eliminarInventario(1L));
+        assertThrows(MensajeException.class, () -> inventarioService.eliminarInventario(1L));
     }
 
     @Test
@@ -164,7 +161,6 @@ class InventarioServiceTest {
         when(repositoryInventario.findById(any(Long.class))).thenReturn(Optional.empty());
 
         // When & Then
-        assertThrows(MensajeException.class, ()
-                -> inventarioService.consultarStock(1L));
+        assertThrows(MensajeException.class, () -> inventarioService.consultarStock(1L));
     }
 }
