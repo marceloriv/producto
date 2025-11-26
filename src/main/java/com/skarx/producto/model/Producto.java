@@ -33,16 +33,19 @@ public class Producto {
     private double precio;
 
     @Column(nullable = false)
-    private int stock;
+    private int stock = 0; // Default value
 
     @Column(length = 50)
     private String categoria;
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 50) // Opcional para alinearse con frontend
     private String marca;
 
     @Column(length = 50)
     private String modelo;
+
+    @Column(length = 255) // Campo para la ruta de la imagen del producto
+    private String image;
 
     @ManyToOne
     @JsonBackReference

@@ -34,6 +34,10 @@ public class RegistracionProductoDto {
     private String marca; // Opcional, puede ser null
 
     private String modelo; // Opcional, puede ser null
+
+    @Size(max = 255, message = "La ruta de la imagen no puede tener más de 255 caracteres")
+    private String image; // Ruta de la imagen del producto
+
     private Long idInventario; // Opcional - se auto-creará si es null
 
     public Producto convertirDtoAProducto() {
@@ -45,6 +49,7 @@ public class RegistracionProductoDto {
         producto.setCategoria(this.categoria);
         producto.setMarca(this.marca);
         producto.setModelo(this.modelo);
+        producto.setImage(this.image);
         return producto;
     }
 }
